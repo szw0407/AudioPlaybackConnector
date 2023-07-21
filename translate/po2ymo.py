@@ -18,8 +18,7 @@ def po2ymo(infile, outfile, includefuzzy=False, encoding='utf-16le'):
     for unit in inputstore.units:
         if unit.istranslated() or (unit.isfuzzy() and includefuzzy and unit.target):
             source = unit.source
-            context = unit.getcontext()
-            if context:
+            if context := unit.getcontext():
                 source = context + '\004' + source
             hash = fnv1a_32(source.encode(encoding))
             units[hash] = unit.target.encode(encoding) + bytes(2)
